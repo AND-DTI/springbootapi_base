@@ -1,14 +1,15 @@
 package com.arjuncodes.studentsystem.controller;
 
-import com.arjuncodes.studentsystem.model.Student;
+import com.arjuncodes.studentsystem.model.dts1.Student;
+import com.arjuncodes.studentsystem.model.dts1.UserRoles;
 import com.arjuncodes.studentsystem.service.StudentService;
 
+import com.arjuncodes.studentsystem.service.UserRolesService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -22,6 +23,9 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
+    @Autowired
+    private UserRolesService userRolesService;
+
     @PostMapping(value="/add", produces="application/text")
     @Operation(summary = "Cadastra estudante!!!")
     @ApiResponses(value = {
@@ -32,7 +36,7 @@ public class StudentController {
         return "New student is added";
     }
 
-    @PreAuthorize("hasRole('USER')")
+    //@PreAuthorize("hasRole('USER')")
     @GetMapping(value="/getAll", produces="application/json")
     @Operation(summary = "Lista todos os estudantes--!")
     /*@ApiResponses(value = {
@@ -42,4 +46,14 @@ public class StudentController {
     public List<Student> list(){
         return studentService.getAllStudents();
     }
+
+
+
+    @GetMapping(value="/getRoles", produces="application/json")
+    @Operation(summary = "List user's roles")
+    public List<UserRoles> Listar(){
+        return userRolesService.listarTodos();
+    }
+
+
 }
