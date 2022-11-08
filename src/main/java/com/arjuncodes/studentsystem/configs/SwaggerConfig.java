@@ -36,7 +36,8 @@ public class SwaggerConfig {
             //.apis(RequestHandlerSelectors.any()) //set basePackage to remove internal error documentation 
             .apis(RequestHandlerSelectors.basePackage("com.arjuncodes.studentsystem.controller"))
             //.paths(PathSelectors.any())
-            .paths(PathSelectors.ant("/api/student/*"))
+            //.paths(PathSelectors.ant("/api/student/*"))
+            .paths(PathSelectors.ant("/api/**"))
             .build()
             //.securitySchemes(Arrays.asList(new ApiKey("Token Access", HttpHeaders.AUTHORIZATION, In.HEADER.name())))
             //.securityContexts(Arrays.asList(securityContext()))
@@ -60,7 +61,8 @@ public class SwaggerConfig {
         private SecurityContext securityContext() {
             return SecurityContext.builder()
                 .securityReferences(defaultAuth())
-                .forPaths(PathSelectors.ant("/pessoa/**"))
+                    .forPaths(PathSelectors.regex("/.*"))
+                    //.forPaths(PathSelectors.ant("/pessoa/**"))
                 .build();
         }
 

@@ -1,19 +1,13 @@
 package com.arjuncodes.studentsystem.controller;
+import com.arjuncodes.studentsystem.model.dts1.*;
+import com.arjuncodes.studentsystem.service.*;
 
-import com.arjuncodes.studentsystem.model.dts1.Student;
-import com.arjuncodes.studentsystem.model.dts1.UserRoles;
-import com.arjuncodes.studentsystem.service.StudentService;
-
-import com.arjuncodes.studentsystem.service.UserRolesService;
+import java.util.List;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-
+import io.swagger.v3.oas.annotations.responses.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-
-import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
