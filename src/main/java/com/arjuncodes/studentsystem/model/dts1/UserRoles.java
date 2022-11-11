@@ -8,13 +8,16 @@ import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.Immutable;
 import org.springframework.data.annotation.*;
 
+import java.io.Serializable;
+
 @Entity
 @Immutable
 @Table(name = "vw_user_roles")
-public class UserRoles {
+public class UserRoles implements Serializable {
 
     @Id
     private String name;
+
     private String role;
 
     public String getName() {

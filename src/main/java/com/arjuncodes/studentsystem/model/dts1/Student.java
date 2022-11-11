@@ -5,7 +5,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.arjuncodes.studentsystem.utils.Auxiliar;
 import io.swagger.annotations.ApiModelProperty;
+
+import static com.arjuncodes.studentsystem.utils.Auxiliar.*;
 
 @Entity
 public class Student {
@@ -46,7 +49,10 @@ public class Student {
     }
 
     public String getAddress() {
-        return address;
+
+        var texto = text.nvl2() + nvl(address);
+        return texto;
+        //return nvl(address);
     }
 
     public void setAddress(String address) {
