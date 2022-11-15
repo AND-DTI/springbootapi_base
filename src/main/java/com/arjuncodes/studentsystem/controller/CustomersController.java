@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 
 
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(maxAge = 3600)
 @RestController
 @RequestMapping("/api/customers")
 public class CustomersController {

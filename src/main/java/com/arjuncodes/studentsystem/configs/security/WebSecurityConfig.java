@@ -55,6 +55,7 @@ public class WebSecurityConfig {
                 //.successHandler(mySuccessHandler)
                 //.failureHandler(myFailureHandler)
                 .and().httpBasic()
+                .and().cors()
                 .and().logout();
         return http.build();
     }
@@ -110,5 +111,13 @@ public class WebSecurityConfig {
     public PasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
     }
+
+
+
+    /*@Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**");
+    } */
+
 
 }
