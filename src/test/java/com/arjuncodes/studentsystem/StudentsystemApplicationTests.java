@@ -6,11 +6,23 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Base64;
+import java.util.Optional;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.arjuncodes.studentsystem.model.dts1.Customers;
+import com.arjuncodes.studentsystem.model.dts1.dto.CustomersDTO;
+
+import ch.qos.logback.core.Context;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.modelmapper.Converter;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeMap;
+import org.modelmapper.spi.MappingContext;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
@@ -26,8 +38,84 @@ class StudentsystemApplicationTests {
 
 
 
-	private String inputFilePath = "avatar-1.jpg";
-    private String outputFilePath = "test_image_copy.jpg";
+  /*ModelMapper mapper;
+  //GameRepository gameRepository; 
+
+  @BeforeEach
+  public void setup() {
+      this.mapper = new ModelMapper();
+      mapper.addConverter(myConverter);
+      //this.gameRepository = new GameRepository();
+  }*/
+
+
+
+  private static ModelMapper mapper = new ModelMapper();
+
+  private static Converter<CustomersDTO, Customers> myConverter = new Converter<CustomersDTO, Customers>()
+    {
+        public Customers convert(MappingContext<CustomersDTO, Customers> context)
+        {
+          CustomersDTO s = context.getSource(); //origem
+          Customers d = new Customers(); //destinbo //*context.getDestination() bug Null
+            d.setAmount(s.getProduct_id());
+            //d.setOrder_id(Integer.valueOf(s.getOrder())); //String to int example
+            //d.setLarge(s.getMass() > 25);
+            return d;
+        }
+    };
+
+
+  /*static{
+    mapper.addConverter(getConverterCustomerDTOType(), CustomersDTO.class, Customers.class);
+  }
+
+  private static Converter<CustomersDTO, Customers> getConverterCustomerDTOType() {
+    return context -> Optional.ofNullable(context.getSource())
+      .map(amount -> product_id)
+      .orElse(null);
+  }*/
+
+
+
+@Test
+public void moddelMapperTest(){
+
+  //TypeMap<CustomersDTO, Customers> propertyMapper = this.mapper.createTypeMap(CustomersDTO.class, Customers.class);
+  mapper.addConverter(myConverter);
+  
+/* 
+  propertyMapper.addMapping(CustomersDTO::getOrder, Customers::setOrder_id);
+  propertyMapper.addMappings(
+    mapper -> mapper.skip(Customers::setAmount)
+    //mapper -> Customers::setOrder_id, CustomersDTO::getOrder
+    //mapper -> CustomersDTO::getOrder, Customers::setOrder_id
+    //mapper -> mapper.Game::getTimestamp, GameDTO::setCreationTime
+   );
+  */
+  
+  Customers cu = new Customers();  
+  CustomersDTO cuDTO = new CustomersDTO("00010", 1005, 50);
+  //mapper.addConverter(myConverter);
+  cu = this.mapper.map(cuDTO, Customers.class);
+
+  System.out.println(cu.toString());
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+  private String inputFilePath = "avatar-1.jpg";
+  private String outputFilePath = "test_image_copy.jpg";
 	private String outputTXT = "src\\test\\resources\\IMG_base64.txt";
 
 	@Test
