@@ -1,18 +1,11 @@
 package com.arjuncodes.studentsystem.service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Locale;
-
-import com.arjuncodes.studentsystem.model.dts1.Customers;
 import com.arjuncodes.studentsystem.model.dts1.User_role;
-import com.arjuncodes.studentsystem.model.dts1.dto.CustomersDTO;
 import com.arjuncodes.studentsystem.model.dts1.dto.User_roleDTO;
-import com.arjuncodes.studentsystem.repository.dts1.CustomersRepository;
 import com.arjuncodes.studentsystem.repository.dts1.User_roleRepository;
-
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.spi.MappingContext;
@@ -34,6 +27,7 @@ public class User_roleService
     public User_roleService(User_roleRepository user_roleRepository, ModelMapper mapper) {
         this.user_roleRepository = user_roleRepository;
         this.mapper = mapper;
+        this.mapper.addConverter(myConverter);
     }
 
 
@@ -82,25 +76,31 @@ public class User_roleService
         @Override        
         public User_role convert(MappingContext<User_roleDTO, User_role> context)
         {
-            
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
-            //SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
-            //Date date = formatter.parse("dateInString");
-
+                                                                       
             User_roleDTO s = context.getSource(); //origem
-            User_role d = new User_role(); //destinbo //*context.getDestination() bug Null            
+            User_role d = new User_role(); //destinbo //*context.getDestination() bug Null                        
+                        
+            //Format dates and numbers
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate dt = LocalDate.parse(s.getDt_cadastro(), formatter);
+            String dtStr = dt.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+            long dtLong = Long.valueOf(dtStr);
+
+                        
             d.setRoleid(s.getRoleid());
             d.setRolename(s.getRolename());
             d.setRoledesc(s.getRoledesc());
-            
-            try {
-                d.setDtcad( formatter.parse(s.getDt_cadastro()).getTime() );
-            } catch (ParseException e) {                
-                e.printStackTrace();
-            }
+            d.setDtcad(dtLong);
+                        
             return d;
+
         }
     };
 
+
+    //SimpleDateFormat formatterS = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH); //dd-MMM-yyyy
+    //Date dt = formatterS.parse(usrDTO.getDt_cadastro());        
+    //DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");                                   
+    //String dtStr2 = dt2.getYear()+StringUtils.leftPad(dt2.getMonthValue()+"",2,"0")+StringUtils.leftPad(dt2.getDayOfMonth()+"", 2, "0");    
 
 }
