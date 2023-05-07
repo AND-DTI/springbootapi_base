@@ -13,7 +13,7 @@ import java.io.Serializable;
 @Entity
 @Immutable
 @Table(name = "vw_user_roles")
-public class UserRoles implements Serializable {
+public class UserRoles0 implements Serializable {
 
     @Id
     private String name;
@@ -30,11 +30,11 @@ public class UserRoles implements Serializable {
     }
 
 
-    public UserRoles() {
+    public UserRoles0() {
 
     }
 
-    public UserRoles(String name, String role) {
+    public UserRoles0(String name, String role) {
         super();
         this.name = name;
         this.role = role;

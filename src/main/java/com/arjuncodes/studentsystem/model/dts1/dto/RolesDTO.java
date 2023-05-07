@@ -7,7 +7,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 
 @ApiModel
-public class User_roleDTO {
+public class RolesDTO {
     
 
     @ApiModelProperty(hidden=true)
@@ -23,7 +23,7 @@ public class User_roleDTO {
     private String dt_cadastro;
 
     
-    public User_roleDTO(String rolename, String roledesc, String dt_cadastro){
+    public RolesDTO(String rolename, String roledesc, String dt_cadastro){
         this.rolename = rolename;
         this.roledesc = roledesc;
         this.dt_cadastro = dt_cadastro;

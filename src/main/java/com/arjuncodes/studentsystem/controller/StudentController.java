@@ -45,7 +45,7 @@ public class StudentController {
 
     @GetMapping(value="/getRoles", produces="application/json")
     @Operation(summary = "List user's roles")
-    public List<UserRoles> Listar(){
+    public List<UserRoles0> Listar(){
         return userRolesService.listarTodos();
     }
 

@@ -1,6 +1,6 @@
 package com.arjuncodes.studentsystem.controller;
 import com.arjuncodes.studentsystem.model.dts1.*;
-import com.arjuncodes.studentsystem.model.dts1.dto.User_roleDTO;
+import com.arjuncodes.studentsystem.model.dts1.dto.RolesDTO;
 import com.arjuncodes.studentsystem.service.*;
 
 import java.text.ParseException;
@@ -26,20 +26,20 @@ import org.apache.commons.lang3.StringUtils;
 @CrossOrigin(maxAge = 3600)
 @RestController
 @RequestMapping("/api/user_role")
-public class User_roleController {
+public class RolesController {
 
     
     
     @Autowired
-    private User_roleService user_roleService;
+    private RolesService rolesService;
 
     
 
 
     @GetMapping(value="/getAll", produces="application/json")
     @Operation(summary = "List all user's roles!")
-    public List<User_role> list(){
-        return user_roleService.listAll();
+    public List<Roles> list(){
+        return rolesService.listAll();
     }
 
 
@@ -50,11 +50,11 @@ public class User_roleController {
         @ApiResponse(responseCode="201", description="{roleid: string}"),
     })
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<String> add(@RequestBody User_roleDTO usrDTO) throws ParseException{	
+    public ResponseEntity<String> add(@RequestBody RolesDTO usrDTO) throws ParseException{	
 				                                            
 
-        User_role userrole = user_roleService.mapDTOtoEntity(usrDTO);
-        User_role newUserrole = user_roleService.saveUser_role(userrole);
+        Roles userrole = rolesService.mapDTOtoEntity(usrDTO);
+        Roles newUserrole = rolesService.saveUser_role(userrole);
 		                        
         return ResponseEntity.status(HttpStatus.CREATED).body("User Role [ID "+newUserrole.getRoleid()+"] added!");
 

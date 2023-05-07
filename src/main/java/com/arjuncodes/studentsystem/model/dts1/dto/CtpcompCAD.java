@@ -13,7 +13,7 @@ public class CtpcompCAD implements Serializable{
     private long compid;
 	
     @ApiModelProperty(position=1, value="Component Code")//, example="C120007")
-    private String nro_it;
+    private String nroit;
 		    
     @ApiModelProperty(position=2, value="Component description")//, example="Espaçador direito")
 	private String nom_it;
@@ -49,9 +49,9 @@ public class CtpcompCAD implements Serializable{
         this.compid = compid;
     }
     
-    public String getNro_it() {        return nro_it;    }
-    public void setNro_it(String nro_it) {
-        this.nro_it = nro_it;
+    public String getNroit() {        return nroit;    }
+    public void setNroit(String nroit) {
+        this.nroit = nroit;
     }
 
     public String getNom_it() {        return nom_it;    }

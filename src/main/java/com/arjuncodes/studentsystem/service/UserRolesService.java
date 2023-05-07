@@ -1,7 +1,7 @@
 package com.arjuncodes.studentsystem.service;
 
 import java.util.List;
-import com.arjuncodes.studentsystem.model.dts1.UserRoles;
+import com.arjuncodes.studentsystem.model.dts1.UserRoles0;
 import com.arjuncodes.studentsystem.repository.dts1.UserRolesRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ public class UserRolesService
         this.urRepository = urRepository;
     }
 
-    public List<UserRoles> listarTodos() {
+    public List<UserRoles0> listarTodos() {
 
         //return urRepository.findDistinctBy();
 

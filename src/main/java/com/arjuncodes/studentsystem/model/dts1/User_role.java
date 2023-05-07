@@ -1,72 +1,73 @@
 package com.arjuncodes.studentsystem.model.dts1;
-
-//import java.util.UUID;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-//import javax.annotation.Generated;
-//import javax.persistence.GenerationType;
+import javax.persistence.*;
 import javax.persistence.Id;
-import javax.persistence.Table;
+//import org.hibernate.annotations.Immutable;
+import org.springframework.security.core.GrantedAuthority;
+import com.arjuncodes.studentsystem.model.dts1.keys.User_RoleKey;
+
+
 
 @Entity
-@Table(name = "user_role")
-public class User_role {
-    
-    //private UUID roleid;
+//@Immutable
+@Table(name = "user_role", 
+       uniqueConstraints = { @UniqueConstraint(columnNames = { "username", "roleid" }) }
+)
+@IdClass(User_RoleKey.class)
+public class User_Role implements GrantedAuthority {
 
-    @Id    
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column( columnDefinition="int" )
-    private long roleid;
-           
-    @Column( columnDefinition="char(20)" )
-    private String rolename; 
-    
-    @Column( columnDefinition="char(255)" )
-    private String roledesc;     
+    @Id
+    @Column(columnDefinition = "char(10)", unique = true)
+    private String username;
 
-    @Column( columnDefinition="int" )
-    private long dtcad;
-    
-    
-    
-    
-   
-    public long getRoleid() {        return roleid;    }
-    public void setRoleid(long roleid) {
-        this.roleid = roleid;
-    }
-    /*public UUID getRoleid() {
-        return roleid;
-    }
-    public void setRoleid(UUID roleid) {
-        this.roleid = roleid;
-    }*/
-    public String getRolename() {        return rolename;    }
-    public void setRolename(String rolename) {
-        this.rolename = rolename;
+    @Id
+    @Column(columnDefinition = "int", unique = true)
+    private Integer roleid;
+
+    @Column(columnDefinition = "char(20)")
+    private String rolename;
+
+    @Column(columnDefinition = "char(8)")
+    private String dtacad;
+
+
+
+    public User_Role() {
+
     }
 
-    public String getRoledesc() {        return roledesc;    }
-    public void setRoledesc(String roledesc) {
-        this.roledesc = roledesc;
-    }
-
-    public long getDtcad() {        return dtcad;    }
-    public void setDtcad(long dtcad) {
-        this.dtcad = dtcad;
-    }
-
-
-    public User_role(){
+    public User_Role(String username, Integer roleid, String rolename, String dtacad) {
         super();
+        this.username = username;
+        this.roleid = roleid;
+        this.rolename = rolename;
+        this.dtacad = dtacad;
     }
 
-    public User_role(String rolename, String roledesc){
-        this.rolename = rolename;
-        this.roledesc = roledesc;
+    public String getUsername() {        return username;    }
+    public void setUsername(String username) {
+        this.username = username;
     }
+
+    public Integer getRoleid() {        return roleid;    }
+    public void setRoleid(Integer roleid) {
+        this.roleid = roleid;
+    }
+
+    //public String getRolname() {        return rolename;    }
+    public void setRolname(String rolename) {
+        this.rolename = rolename;
+    }
+
+    public String getDtacad() {        return dtacad;    }
+    public void setDtacad(String dtacad) {
+        this.dtacad = dtacad;
+    }
+
+    @Override
+    public String getAuthority() {        
+        return this.rolename;
+    }
+
+
 
 }

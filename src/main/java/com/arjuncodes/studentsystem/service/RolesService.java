@@ -3,9 +3,9 @@ package com.arjuncodes.studentsystem.service;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import com.arjuncodes.studentsystem.model.dts1.User_role;
-import com.arjuncodes.studentsystem.model.dts1.dto.User_roleDTO;
-import com.arjuncodes.studentsystem.repository.dts1.User_roleRepository;
+import com.arjuncodes.studentsystem.model.dts1.Roles;
+import com.arjuncodes.studentsystem.model.dts1.dto.RolesDTO;
+import com.arjuncodes.studentsystem.repository.dts1.RolesRepository;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.spi.MappingContext;
@@ -16,16 +16,16 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class User_roleService
+public class RolesService
 {
 
-    final User_roleRepository user_roleRepository;
+    final RolesRepository rolesRepository;
     
     @Autowired
 	private ModelMapper mapper;
 
-    public User_roleService(User_roleRepository user_roleRepository, ModelMapper mapper) {
-        this.user_roleRepository = user_roleRepository;
+    public RolesService(RolesRepository rolesRepository, ModelMapper mapper) {
+        this.rolesRepository = rolesRepository;
         this.mapper = mapper;
         this.mapper.addConverter(myConverter);
     }
@@ -33,25 +33,25 @@ public class User_roleService
 
 
 
-    public List<User_role> listAll() {
+    public List<Roles> listAll() {
 
         //@Query("SELECT distinct a FROM Activity a ")
-        return user_roleRepository.findAll();
+        return rolesRepository.findAll();
 
     }
 
 
 
-    public User_role saveUser_role(User_role usrrole){
+    public Roles saveUser_role(Roles usrrole){
 
-        return user_roleRepository.save(usrrole);
+        return rolesRepository.save(usrrole);
     }
 
 
 
-    public User_role mapDTOtoEntity(User_roleDTO userroleDTO){
+    public Roles mapDTOtoEntity(RolesDTO userroleDTO){
 
-        User_role user_role = mapper.map(userroleDTO, User_role.class);//new Customers();
+        Roles user_role = mapper.map(userroleDTO, Roles.class);//new Customers();
 
         return user_role;
 
@@ -70,15 +70,15 @@ public class User_roleService
 
 
     //DTO definitions
-    Converter<User_roleDTO, User_role> myConverter = new Converter<User_roleDTO, User_role>()
+    Converter<RolesDTO, Roles> myConverter = new Converter<RolesDTO, Roles>()
     {
         
         @Override        
-        public User_role convert(MappingContext<User_roleDTO, User_role> context)
+        public Roles convert(MappingContext<RolesDTO, Roles> context)
         {
                                                                        
-            User_roleDTO s = context.getSource(); //origem
-            User_role d = new User_role(); //destinbo //*context.getDestination() bug Null                        
+            RolesDTO s = context.getSource(); //origem
+            Roles d = new Roles(); //destinbo //*context.getDestination() bug Null                        
                         
             //Format dates and numbers
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");

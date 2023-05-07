@@ -2,7 +2,7 @@ package com.arjuncodes.studentsystem.controller;
 import com.arjuncodes.studentsystem.model.dts1.*;
 import com.arjuncodes.studentsystem.model.dts1.dto.CtpcompCAD;
 import com.arjuncodes.studentsystem.model.dts1.dto.CtpcompDTOput;
-import com.arjuncodes.studentsystem.model.dts1.dto.User_roleDTO;
+import com.arjuncodes.studentsystem.model.dts1.dto.RolesDTO;
 import com.arjuncodes.studentsystem.service.*;
 import java.text.ParseException;
 import java.util.List;
@@ -58,6 +58,28 @@ public class CtpcompController {
 
 
 
+/*********************************************************************************************************
+    ****** GET Endpoint [ctpcomp/getall] *********************************************************************
+    *********************************************************************************************************/
+    //@PreAuthorize("hasRole(USER')")
+	@GetMapping(value="/listall", produces="application/json")
+	@Operation(summary = "Lista todos os Componentes")
+	@ApiResponses(value = {	    
+	    @ApiResponse(responseCode="404", description="Nenhum componente cadastrado!")
+	})   	        
+	public ResponseEntity<List<CtpcompCAD>> listAlluser(
+            @PageableDefault(page=0, size=10, sort="compid", direction=Sort.Direction.ASC) Pageable pageable
+        )
+    {
+
+        List<CtpcompCAD> componentes = ctpcompService.findAllCAD();				
+	    if (componentes.isEmpty()) {
+	    	return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(componentes);
+
+    }	
+
 
     /*********************************************************************************************************
     ****** GET Endpoint [ctpcomp/getall2] (custom select) ****************************************************
@@ -78,26 +100,65 @@ public class CtpcompController {
     }
 
 
+
+
+
+    /*********************************************************************************************************
+    ****** GET Endpoint [ctpcomp/getComp/{nroit}] ************************************************************
+    *********************************************************************************************************/   
+	@GetMapping(value="/getComp/{nroit}", produces="application/json")
+	@Operation(summary = "Pega componente por código.")		
+	@ApiResponses(value = {
+	    @ApiResponse(responseCode="200", description="OK!"),
+	    @ApiResponse(responseCode="404", description="Componente não encontrado"),
+	    @ApiResponse(responseCode="500", description="Internal Server Error!"),  	    
+	})   	
+	public ResponseEntity<List<CtpcompCAD>> listCompByCode(@PathVariable(value="nroit") String nroit){
+								
+		
+		List<CtpcompCAD> cadastros = ctpcompService.findByCode(nroit);
+		
+        if (cadastros.isEmpty()) {
+	    	return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }                       
+        return ResponseEntity.status(HttpStatus.OK).body(cadastros);
+
+		
+		//List<Usuario> userRoles = usuarioService.listByUsername(nro_it);
+		
+		//return ResponseEntity.status(HttpStatus.OK).body(usuarioOptional.get());    
+	    /*if (!usuarioOptional.isPresent()) {
+	    	return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }*/
+        //return ResponseEntity.status(HttpStatus.OK).body(userRoles); 		
+
+	}	
+
+
     
 
     /*********************************************************************************************************
     ****** PUT Endpoint [ctpcomp/add] ************************************************************************
     *********************************************************************************************************/    
-    @PutMapping(value="/add", produces="application/text")
+    @PutMapping(value="/add", produces="application/json") ///text if not object class
     @Operation(summary = "Cadastrar componente.")
     @ApiResponses(value = {
-        @ApiResponse(responseCode="201", description="{compid: string}"),
+        @ApiResponse(responseCode="201", description="Componente cadastrado com sucesso!"),
     })
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<CtpcompCAD> add(@RequestBody CtpcompDTOput compDTO) throws ParseException{	
 				                                            
 
-        Ctpcomp componente = ctpcompService.mapDTOtoEntity(compDTO);
-        Ctpcomp newComponente = ctpcompService.saveCtpcomp(componente);
-        CtpcompCAD cadastro = ctpcompService.mapEntityToCAD(newComponente);
-		                        
-        return ResponseEntity.status(HttpStatus.CREATED).body(cadastro);
-     
+        //Ctpcomp componente = ctpcompService.mapDTOtoEntity(compDTO);
+        //Ctpcomp newComponente = ctpcompService.saveCtpcomp(componente);		
+        //CtpcompCAD cadastro = ctpcompService.mapEntityToCAD(newComponente);
+		CtpcompCAD cadastroNEW = ctpcompService.save(compDTO);
+		                                			
+		return ResponseEntity.status(HttpStatus.CREATED) //ok()
+			.header("Accept", "application/json")
+			.body(cadastroNEW);
+
+		     
     }
 
 

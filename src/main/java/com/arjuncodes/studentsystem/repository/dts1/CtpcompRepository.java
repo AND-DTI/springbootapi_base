@@ -16,4 +16,6 @@ public interface CtpcompRepository extends JpaRepository<Ctpcomp, String>{
     List<Object[]> findAll2(); 
 
 
+    List<Ctpcomp> findByNroit(String nroit);
+
 }

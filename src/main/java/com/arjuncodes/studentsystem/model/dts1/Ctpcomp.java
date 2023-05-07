@@ -5,10 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
 import javax.persistence.Table;
-
-import com.arjuncodes.studentsystem.model.dts1.keys.CtpcompKey;
+//import javax.persistence.IdClass;
+//import com.arjuncodes.studentsystem.model.dts1.keys.CtpcompKey;
 
 
 
@@ -39,7 +38,7 @@ public class Ctpcomp  implements Serializable{
 	
 	//@Id
 	@Column( columnDefinition="char(20)" )
-	private String nro_it;
+	private String nroit;
 	
 	@Column( columnDefinition="char(50)" )
 	private String nom_it;
@@ -83,9 +82,9 @@ public class Ctpcomp  implements Serializable{
         this.compid = compid;
     }
 
-    public String getNro_it() {        return nro_it;    }
-    public void setNro_it(String nro_it) {
-        this.nro_it = nro_it;
+    public String getNroit() {        return nroit;    }
+    public void setNroit(String nroit) {
+        this.nroit = nroit;
     }
 
     public String getNom_it() {        return nom_it;    }

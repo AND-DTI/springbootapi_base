@@ -1,50 +1,55 @@
 package com.arjuncodes.studentsystem.model.dts1.dto;
-
 import java.io.Serializable;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 
 
 @ApiModel
-public class CtpcompDTOput implements Serializable{
+public class CtpcompDTOpost implements Serializable{
     
-        
-	@ApiModelProperty(value="Component Code", example="C120007")
+
+    @ApiModelProperty(position=0, value="Component ID")
+    private long compid;
+        	
+    @ApiModelProperty(position=1, value="Component Code", example="C120007")
     private String nroit;
 		    
-    @ApiModelProperty(value="Component description", example="Espaçador direito")
+    @ApiModelProperty(position=2, value="Component description", example="Espaçador direito")
 	private String nom_it;
-	
-	@ApiModelProperty(value="Component technical drawing (Base64)")
+		
+    @ApiModelProperty(position=3, value="Component technical drawing (Base64)")
 	private String fileBase64;
-	
-    @ApiModelProperty(value="Register date (YYYY-MM-DD)", example="2014-10-03")
-	private String dtacadS; /*do custom map to DB2*/
 
-	@ApiModelProperty(value="User", example="37635")
+	@ApiModelProperty(position=4, value="Register date (YYYY-MM-DD)", example="2014-10-03")
+	private String dtacadS; 
+
+	@ApiModelProperty(position=5, value="User", example="37635")
 	private Integer usrcad;
 	
-	@ApiModelProperty(value="Obs", example="To attend project...")
+	@ApiModelProperty(position=6, value="Obs")
 	private String obs;
-
-	@ApiModelProperty(value="Audit - System name", example="PROGXYZ.JAVA")
+	
+    @ApiModelProperty(position=7, value="Audit - System name", example="PROGXYZ.JAVA")
 	private String itaudsys;
 			
-	@ApiModelProperty(value="Audit - User ", example="SB037635")
+	@ApiModelProperty(position=8, value="Audit - User ", example="SB037635")
 	private String itaudusr;
-	    
-    @ApiModelProperty(value="Audit - Host ", example="SAHDAMVQAPP001")
-	private String itaudhst;
 	
-    /*private String itauddt;
+	@ApiModelProperty(position=9, value="Audit - Host ", example="SAHDAMVQAPP001")
+    private String itaudhst;	
+
+  /*private String itauddt;		
 				
-	private String itaudhr;	*/
-
-
-
+	private String itaudhr;	*/    				
+	    
     
+
+    public long getCompid() {        return compid;    }
+    public void setCompid(long compid) {
+        this.compid = compid;
+    }
+
     public String getNroit() {        return nroit;    }
     public void setNroit(String nroit) {
         this.nroit = nroit;
@@ -88,7 +93,7 @@ public class CtpcompDTOput implements Serializable{
     public String getItaudhst() {        return itaudhst;    }
     public void setItaudhst(String itaudhst) {
         this.itaudhst = itaudhst;
-    }    
+    }
 
-    
+
 }
