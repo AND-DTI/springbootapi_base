@@ -200,7 +200,7 @@ public class CtpcompService
             String outputPDF = fileName+".PDF";
             String outputB64 = fileName+"_Base64.TXT";
             String decodeResult;
-            String pathPDF = fileServer+"\\"+outputPDF;
+            String pathPDF = fileServer+"/"+outputPDF;
                         
             decodeResult = Auxiliar.decodeBase64(s.getFileBase64(), outputPDF, outputB64, fileServer);            
             if( !StringUtils.equals(decodeResult, "OK") ){
@@ -216,9 +216,9 @@ public class CtpcompService
             d.setUsrcad(s.getUsrcad());
             d.setObs(s.getObs());
             //Set system audit
-            d.setItaudsys("sysrequest");
-            d.setItaudusr("usrlogged");
-            d.setItaudhst("hostrequest"); //get from login
+            d.setItaudsys(s.getItaudsys()); //sysrequest - frontend
+            d.setItaudusr(s.getItaudusr()); //loged user on frontend
+            d.setItaudhst(s.getItaudhst()); //host user who call frontend
             d.setItauddt(audit.getData_audit());
             d.setItaudhr(audit.getHora_audit());
                         
@@ -250,7 +250,7 @@ public class CtpcompService
             String fileName = s.getNroit().trim();
             String outputPDF = fileName+".PDF";
             String outputB64 = fileName+"_Base64.TXT";             
-            String pathPDF = fileServer+"\\"+outputPDF;
+            String pathPDF = fileServer+"/"+outputPDF;
                         
             String decodeResult = Auxiliar.decodeBase64(s.getFileBase64(), outputPDF, outputB64, fileServer);            
             if( !StringUtils.equals(decodeResult, "OK") ){
@@ -266,10 +266,10 @@ public class CtpcompService
             d.setDtacad(dtStr);
             d.setUsrcad(s.getUsrcad());
             d.setObs(s.getObs());
-            //Set system audit
-            d.setItaudsys("sysrequest");
-            d.setItaudusr("usrlogged");
-            d.setItaudhst("hostrequest"); //get from login
+            //Set system audit            
+            d.setItaudsys(s.getItaudsys()); //sysrequest - frontend
+            d.setItaudusr(s.getItaudusr()); //loged user on frontend
+            d.setItaudhst(s.getItaudhst()); //host user who call frontend
             d.setItauddt(audit.getData_audit());
             d.setItaudhr(audit.getHora_audit());
                         

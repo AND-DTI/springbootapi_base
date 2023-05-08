@@ -1,8 +1,14 @@
 package com.arjuncodes.studentsystem.utils;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
+import java.nio.file.NoSuchFileException;
+import java.util.Base64;
+
+import org.apache.commons.io.FileUtils;
 
 public class Auxiliar {
 
@@ -23,32 +29,61 @@ public class Auxiliar {
     }
 
 
-    public static void saveFile(String file, String content) throws FileNotFoundException{
 
-		PrintStream ps = new PrintStream(
+    public static void saveFile(String file, String content) throws IOException {//, NoSuchFileException{
+
+		
+        try{
+            FileUtils.delete(new File(file));
+        }catch(Exception e){
+
+        }
+                
+        PrintStream ps = new PrintStream(
             new FileOutputStream(file, true)
         ); 
         
-        //ps.println(); 
+        //ps.println(); //add blank line
         ps.print(content);        
         ps.close();
 
-	}
+	}    
 
 
     public static String decodeBase64(String encodedString, String outputPDF, String outputB64, String fileServer) {
         
         Boolean decodificado =false;
-        String decodeError ="";
-       
+        String decodeError ="";       
+        String fileServerCTP = "c:/DEV/FileServerCTP";
 
         try {
 
         
             try{
+                
 
+                //Save encoded content                
                 saveFile(fileServer+"//"+outputB64, encodedString); 
+
+
+                // decode the encoded string 
+                byte[] decodedBytes = Base64
+                    .getDecoder()
+                    .decode(encodedString);
+                
+                    
+                //Write file for decoded image
+                File outputIMG = new File(fileServer+"//"+outputPDF);
+                FileUtils.writeByteArrayToFile(outputIMG, decodedBytes);
+
+
+                //Send copy to CTP Server
+                File outputIMG_copy = new File(fileServerCTP+"//"+outputPDF);
+                FileUtils.copyFile(outputIMG, outputIMG_copy);
+
                 decodificado = true;
+
+
 
             } catch (FileNotFoundException e) {
                 //save log

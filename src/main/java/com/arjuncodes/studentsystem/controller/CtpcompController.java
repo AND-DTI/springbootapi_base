@@ -1,6 +1,7 @@
 package com.arjuncodes.studentsystem.controller;
 import com.arjuncodes.studentsystem.model.dts1.*;
 import com.arjuncodes.studentsystem.model.dts1.dto.CtpcompCAD;
+import com.arjuncodes.studentsystem.model.dts1.dto.CtpcompDTOpost;
 import com.arjuncodes.studentsystem.model.dts1.dto.CtpcompDTOput;
 import com.arjuncodes.studentsystem.model.dts1.dto.RolesDTO;
 import com.arjuncodes.studentsystem.service.*;
@@ -148,10 +149,7 @@ public class CtpcompController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<CtpcompCAD> add(@RequestBody CtpcompDTOput compDTO) throws ParseException{	
 				                                            
-
-        //Ctpcomp componente = ctpcompService.mapDTOtoEntity(compDTO);
-        //Ctpcomp newComponente = ctpcompService.saveCtpcomp(componente);		
-        //CtpcompCAD cadastro = ctpcompService.mapEntityToCAD(newComponente);
+        
 		CtpcompCAD cadastroNEW = ctpcompService.save(compDTO);
 		                                			
 		return ResponseEntity.status(HttpStatus.CREATED) //ok()
@@ -161,6 +159,28 @@ public class CtpcompController {
 		     
     }
 
+
+
+    /*********************************************************************************************************
+    ****** POST Endpoint [ctpcomp/update] ********************************************************************
+    *********************************************************************************************************/    
+    @PostMapping(value="/update", produces="application/json") 
+    @Operation(summary = "Altearr componente.")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode="201", description="Componente alterado com sucesso!"),
+    })
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<CtpcompCAD> add(@RequestBody CtpcompDTOpost compDTO) throws ParseException{	
+				                                            
+        
+        CtpcompCAD cadastroALT = ctpcompService.update(compDTO);
+		                                			
+		return ResponseEntity.status(HttpStatus.CREATED) 
+			.header("Accept", "application/json")
+			.body(cadastroALT);
+
+		     
+    }
 
 
     /*@PutMapping(value="/add", produces="application/text")		
