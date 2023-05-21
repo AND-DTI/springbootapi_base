@@ -53,7 +53,7 @@ public class CustomersController {
     //public String add(@RequestBody CustomersDTO cuDTO){	
     public ResponseEntity<String> add(@RequestBody CustomersDTO cuDTO){	
 		
-		String var1 = "";
+		//String var1 = "";
 
         //Customers cu = mapper.map(cuDTO, Customers.class); OK
         Customers cu = customersService.mapDTOtoEntity(cuDTO);

@@ -6,21 +6,18 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Base64;
-import java.util.Optional;
-
+//import java.util.Optional;
 import org.apache.commons.io.FileUtils;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.arjuncodes.studentsystem.model.dts1.Customers;
 import com.arjuncodes.studentsystem.model.dts1.dto.CustomersDTO;
-
-import ch.qos.logback.core.Context;
-
-import org.junit.jupiter.api.BeforeEach;
+//import ch.qos.logback.core.Context;
+//import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeMap;
+//import org.modelmapper.TypeMap;
 import org.modelmapper.spi.MappingContext;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -97,7 +94,7 @@ public void moddelMapperTest(){
   Customers cu = new Customers();  
   CustomersDTO cuDTO = new CustomersDTO("00010", 1005, 50);
   //mapper.addConverter(myConverter);
-  cu = this.mapper.map(cuDTO, Customers.class);
+  cu = mapper.map(cuDTO, Customers.class); //old: this.mapper...
 
   System.out.println(cu.toString());
 

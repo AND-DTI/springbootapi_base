@@ -1,6 +1,5 @@
 package com.arjuncodes.studentsystem.model.dts1.dto;
-import org.aspectj.apache.bcel.generic.Type;
-
+//import org.aspectj.apache.bcel.generic.Type;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 

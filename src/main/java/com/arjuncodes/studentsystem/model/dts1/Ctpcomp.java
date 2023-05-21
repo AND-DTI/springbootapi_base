@@ -41,7 +41,7 @@ public class Ctpcomp  implements Serializable{
 	private String nroit;
 	
 	@Column( columnDefinition="char(50)" )
-	private String nom_it;
+	private String nomit;
 	
 	@Column( columnDefinition="char(200)" )
 	private String pdffil;
@@ -87,9 +87,9 @@ public class Ctpcomp  implements Serializable{
         this.nroit = nroit;
     }
 
-    public String getNom_it() {        return nom_it;    }
-    public void setNom_it(String nom_it) {
-        this.nom_it = nom_it;
+    public String getNomit() {        return nomit;    }
+    public void setNomit(String nomit) {
+        this.nomit = nomit;
     }
 
     public String getPdffil() {        return pdffil;    }

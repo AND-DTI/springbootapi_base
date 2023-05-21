@@ -1,5 +1,8 @@
 package com.arjuncodes.studentsystem.model.dts1.dto;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -16,11 +19,8 @@ public class CtpcompDTOpost implements Serializable{
     private String nroit;
 		    
     @ApiModelProperty(position=2, value="Component description", example="Espaçador direito")
-	private String nom_it;
+	private String nomit;
 		
-    @ApiModelProperty(position=3, value="Component technical drawing (Base64)")
-	private String fileBase64;
-
 	@ApiModelProperty(position=4, value="Register date (YYYY-MM-DD)", example="2014-10-03")
 	private String dtacadS; 
 
@@ -30,6 +30,10 @@ public class CtpcompDTOpost implements Serializable{
 	@ApiModelProperty(position=6, value="Obs")
 	private String obs;
 	
+    @ApiModelProperty(position=7, value="attachs")
+    private List<CtpcompAttach_post> attachs = new ArrayList<CtpcompAttach_post>();
+
+    
     @ApiModelProperty(position=7, value="Audit - System name", example="PROGXYZ.JAVA")
 	private String itaudsys;
 			
@@ -39,8 +43,7 @@ public class CtpcompDTOpost implements Serializable{
 	@ApiModelProperty(position=9, value="Audit - Host ", example="SAHDAMVQAPP001")
     private String itaudhst;	
 
-  /*private String itauddt;		
-				
+  /*private String itauddt;					
 	private String itaudhr;	*/    				
 	    
     
@@ -55,14 +58,9 @@ public class CtpcompDTOpost implements Serializable{
         this.nroit = nroit;
     }
 
-    public String getNom_it() {        return nom_it;    }
-    public void setNom_it(String nom_it) {
-        this.nom_it = nom_it;
-    }
-
-    public String getFileBase64() {        return fileBase64;    }
-    public void setFileBase64(String fileBase64) {
-        this.fileBase64 = fileBase64;
+    public String getNomit() {        return nomit;    }
+    public void setNomit(String nomit) {
+        this.nomit = nomit;
     }
 
     public String getDtacadS() {        return dtacadS;    }
@@ -80,20 +78,19 @@ public class CtpcompDTOpost implements Serializable{
         this.obs = obs;
     }
 
-    public String getItaudsys() {        return itaudsys;    }
-    public void setItaudsys(String itaudsys) {
-        this.itaudsys = itaudsys;
+    public List<CtpcompAttach_post> getAttachs() {        return attachs;    }
+    public void setAttachs(List<CtpcompAttach_post> attachs) {
+        this.attachs = attachs;
     }
+
+    public String getItaudsys() {        return itaudsys;    }
+    public void setItaudsys(String itaudsys) {        this.itaudsys = itaudsys;    }
 
     public String getItaudusr() {        return itaudusr;    }
-    public void setItaudusr(String itaudusr) {
-        this.itaudusr = itaudusr;
-    }
+    public void setItaudusr(String itaudusr) {        this.itaudusr = itaudusr;    }
 
     public String getItaudhst() {        return itaudhst;    }
-    public void setItaudhst(String itaudhst) {
-        this.itaudhst = itaudhst;
-    }
+    public void setItaudhst(String itaudhst) {        this.itaudhst = itaudhst;    }
 
 
 }

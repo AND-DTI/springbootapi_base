@@ -1,15 +1,11 @@
 package com.arjuncodes.studentsystem.controller;
 import com.arjuncodes.studentsystem.model.dts1.*;
-import com.arjuncodes.studentsystem.model.dts1.dto.CtpcompCAD;
-import com.arjuncodes.studentsystem.model.dts1.dto.CtpcompDTOput;
 import com.arjuncodes.studentsystem.model.dts1.dto.Login;
-import com.arjuncodes.studentsystem.model.dts1.dto.RolesDTO;
 import com.arjuncodes.studentsystem.repository.dts1.UserRepository;
 import com.arjuncodes.studentsystem.service.*;
 import java.text.ParseException;
 import java.util.List;
-import java.util.Optional;
-
+//import java.util.Optional;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +14,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+//import org.springframework.security.core.context.SecurityContextHolder;
+//import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 

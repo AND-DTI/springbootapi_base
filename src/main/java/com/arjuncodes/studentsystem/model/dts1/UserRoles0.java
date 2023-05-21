@@ -2,13 +2,12 @@ package com.arjuncodes.studentsystem.model.dts1;
 
 import javax.persistence.*;
 import javax.persistence.Id;
-
-import io.swagger.annotations.ApiModelProperty;
+//import io.swagger.annotations.ApiModelProperty;
 //import org.hibernate.annotations.*;
 import org.hibernate.annotations.Immutable;
-import org.springframework.data.annotation.*;
-
+//import org.springframework.data.annotation.*;
 import java.io.Serializable;
+
 
 @Entity
 @Immutable

@@ -1,5 +1,7 @@
 package com.arjuncodes.studentsystem.model.dts1.dto;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -9,40 +11,36 @@ import io.swagger.annotations.ApiModelProperty;
 public class CtpcompCAD implements Serializable{
     
         
-    @ApiModelProperty(position=0, value="Component Code")//, example="C120007")
+    @ApiModelProperty(position=0, value="Component ID")
     private long compid;
 	
-    @ApiModelProperty(position=1, value="Component Code")//, example="C120007")
+    @ApiModelProperty(position=1, value="Component Code") 
     private String nroit;
 		    
-    @ApiModelProperty(position=2, value="Component description")//, example="Espaçador direito")
-	private String nom_it;
+    @ApiModelProperty(position=2, value="Component description")
+	private String nomit;
 	
-	@ApiModelProperty(position=3, value="Component technical drawing (PDF)")//, example="C120007.PDF")
+	@ApiModelProperty(position=3, value="Component technical drawing (PDF)")
 	private String pdffil;
 
-	@ApiModelProperty(position=4, value="Register date (YYYYMMDD)")//, example="2014-10-03")
+	@ApiModelProperty(position=4, value="Register date (YYYYMMDD)")
 	private String dtacad; 
 
-	@ApiModelProperty(position=5, value="User")//, example="37635")
+	@ApiModelProperty(position=5, value="User")
 	private Integer usrcad;
 	
-	@ApiModelProperty(position=6, value="Obs")//, example="To attend project...")
+	@ApiModelProperty(position=6, value="Obs")
 	private String obs;
 
-	/*@ApiModelProperty(value="Audit - System name", example="PROGXYZ.JAVA")
-	private String itaudsys;
-			
-	@ApiModelProperty(value="Audit - User ", example="SB037635")
-	private String itaudusr;
-	    
-    @ApiModelProperty(value="Audit - Host ", example="SAHDAMVQAPP001")
-	private String itaudhst;
-	*/
-    /*private String itauddt;
-				
-	private String itaudhr;	*/
+    @ApiModelProperty(position=7, value="attachs")
+    private List<CtpcompAttach_post> attachs = new ArrayList<CtpcompAttach_post>();
+    
 
+
+
+    public CtpcompCAD(){
+
+    }
 
     public long getCompid() {        return compid;    }
     public void setCompid(long compid) {
@@ -54,9 +52,9 @@ public class CtpcompCAD implements Serializable{
         this.nroit = nroit;
     }
 
-    public String getNom_it() {        return nom_it;    }
-    public void setNom_it(String nom_it) {
-        this.nom_it = nom_it;
+    public String getNomit() {        return nomit;    }
+    public void setNomit(String nomit) {
+        this.nomit = nomit;
     }
 
     public String getPdffil() {        return pdffil;    }
@@ -78,6 +76,14 @@ public class CtpcompCAD implements Serializable{
     public void setObs(String obs) {
         this.obs = obs;
     }
+
+    public List<CtpcompAttach_post> getAttachs() {        return attachs;    }
+    public void setAttachs(List<CtpcompAttach_post> attachs) {
+        this.attachs = attachs;
+    }    
+
+   
+
 
     
 }

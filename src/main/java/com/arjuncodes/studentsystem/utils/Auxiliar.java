@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.nio.file.NoSuchFileException;
+//import java.nio.file.NoSuchFileException;
 import java.util.Base64;
 
 import org.apache.commons.io.FileUtils;
@@ -44,17 +44,17 @@ public class Auxiliar {
         ); 
         
         //ps.println(); //add blank line
-        ps.print(content);        
+        ps.print(content+"\n");        
         ps.close();
 
 	}    
 
 
-    public static String decodeBase64(String encodedString, String outputPDF, String outputB64, String fileServer) {
+    public static String decodeBase64(String encodedString, String outputPDF, String outputB64, String fileServer, String fileServerPUB) {
         
         Boolean decodificado =false;
         String decodeError ="";       
-        String fileServerCTP = "c:/DEV/FileServerCTP";
+        
 
         try {
 
@@ -78,7 +78,7 @@ public class Auxiliar {
 
 
                 //Send copy to CTP Server
-                File outputIMG_copy = new File(fileServerCTP+"//"+outputPDF);
+                File outputIMG_copy = new File(fileServerPUB+"//"+outputPDF);
                 FileUtils.copyFile(outputIMG, outputIMG_copy);
 
                 decodificado = true;
@@ -112,6 +112,25 @@ public class Auxiliar {
 
 
     
+    public static String readFile(String fileSource) {
+
+        String content = "";
+
+        try {
+
+            File file = new File(fileSource);
+
+            content = FileUtils.readFileToString(file, "UTF-8");            
+            
+        } catch (IOException e) {
+            
+        }
+
+        return content;
+        
+
+    }
+
 
 
 
