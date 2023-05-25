@@ -94,7 +94,10 @@ public class CtpattachService
         Ctpattach attachNew = ctpattachRepository.save(attach);
 		
         CtpcompAttach_post atachCAD = new CtpcompAttach_post(
-            attachNew.getAtachid(), attachNew.getAtachname(), attachNew.getB64file()
+            attachNew.getAtachid(), 
+            attachNew.getAtachname(), 
+            attachNew.getAtachtp(),
+            attachNew.getB64file()
         );
 
 
@@ -144,24 +147,28 @@ public class CtpattachService
             //String fileName = s.getNroit().trim(); //StringUtils.leftPad(s.getNroit().trim(), 5, "0");
             //String outputPDF = fileName+".PDF";
             String outputB64 = s.getAtachname().replace(".PDF", "")+"_Base64.TXT";
-            String decodeResult;
+            String[] decodeResult;
             String obs = "";
                         
             decodeResult = Auxiliar.decodeBase64(s.getFileBase64(), s.getAtachname(), outputB64, fileServer, fileServerCTP);            
-            if( !StringUtils.equals(decodeResult, "OK") ){
-                obs = ("conversion error: "+decodeResult).substring(0, 199);
+            if( StringUtils.equals(decodeResult[0], "NG") ){
+                obs = ("conversion error: "+decodeResult[1]).substring(0, 199);
             }
             
+            //String fileBase64 = singleAttach.getAtachpath()+"/"+singleAttach.getB64file();
+            //String base64Data = Auxiliar.readFile(fileBase64);
 
             //Set values
             d.setAtachid(s.getAtachid()); //if 0: insert else update
             d.setAtachtb("CTPCOMP");
-            d.setRegid(s.getCompid());
+            d.setIdreg(s.getCompid());
             d.setAtachname(s.getAtachname());
+            d.setAtachtp(s.getAtachtp());
             d.setAtachpath(fileServer);
             d.setB64file(outputB64);
             d.setPubpath(fileServerCTP);
             d.setAtachobs(obs);
+            d.setAtachdata(s.getFileBase64().getBytes());
             //Set system audit                        
             d.setItaudsys(s.getItaudsys()); //sysrequest - frontend
             d.setItaudusr(s.getItaudusr()); //loged user on frontend

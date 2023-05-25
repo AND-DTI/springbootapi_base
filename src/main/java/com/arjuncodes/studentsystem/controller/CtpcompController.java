@@ -114,9 +114,9 @@ public class CtpcompController {
 		
 		CtpcompCAD cadastro = ctpcompService.getByID(compid);
 		
-        /*if (cadastro.isEmpty()) {
+        if (cadastro == null) {
 	    	return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        } */                      
+        }                      
         return ResponseEntity.status(HttpStatus.OK).body(cadastro);
 
 		
@@ -145,22 +145,36 @@ public class CtpcompController {
 	})   	    
     @ResponseStatus(HttpStatus.CREATED)    
     public ResponseEntity<CtpcompCAD> add(@RequestBody CtpcompDTOput compDTO) throws ParseException{	
-				                                            
+				  
         //Insert ctpcomp
 		CtpcompCAD cadastroNEW = ctpcompService.save(compDTO);
+
 
         //insert ctpattach
         CtpattachDTO atachDTO = new CtpattachDTO(
             cadastroNEW.getCompid(),
             compDTO.getAttachs().get(0).getAtachname(),
+            compDTO.getAttachs().get(0).getAtachtp(),
             compDTO.getAttachs().get(0).getFileBase64(),
             compDTO.getItaudsys(),
             compDTO.getItaudusr(),
             compDTO.getItaudhst()
         );
-        CtpcompAttach_post atachCAD = ctpattachService.save(atachDTO);       
-        
+        CtpcompAttach_post atachCAD = ctpattachService.save(atachDTO);               
         cadastroNEW.getAttachs().add(atachCAD);
+
+
+        //Insert replication interface (ctpint)		
+        Ctpint reply = new Ctpint(
+            cadastroNEW.getCompid(), 
+            "CTPCOMP", 
+            "FER004", 
+            "AS400", 
+            "SESUITE", 
+            "Replica CTPCOMP para SoftExpert", 
+            0
+            );        
+        ctpintService.saveCtpint(reply);
 
         
 		return ResponseEntity.status(HttpStatus.CREATED) //ok()
@@ -186,11 +200,13 @@ public class CtpcompController {
         //Update ctpcomp
         CtpcompCAD cadastroALT = ctpcompService.update(compDTO);
 
+
         //Update ctpattach
         CtpattachDTO atachDTO = new CtpattachDTO(
             compDTO.getAttachs().get(0).getAtachid(),  
             compDTO.getCompid(),
             compDTO.getAttachs().get(0).getAtachname(),
+            compDTO.getAttachs().get(0).getAtachtp(),
             compDTO.getAttachs().get(0).getFileBase64(),
             compDTO.getItaudsys(),
             compDTO.getItaudusr(),
@@ -200,8 +216,7 @@ public class CtpcompController {
         cadastroALT.getAttachs().add(atachCAD);
         
 
-        //Insert replication interface (ctpint)
-		//Ctpint interface = null;//new CtpintService(;)
+        //Insert replication interface (ctpint)		
         Ctpint reply = new Ctpint(
             cadastroALT.getCompid(), 
             "CTPCOMP", 
@@ -210,10 +225,10 @@ public class CtpcompController {
             "SESUITE", 
             "Replica CTPCOMP para SoftExpert", 
             0
-            );
-        
+            );        
         ctpintService.saveCtpint(reply);
         
+
 		return ResponseEntity.status(HttpStatus.CREATED) 
 			.header("Accept", "application/json")
 			.body(cadastroALT);

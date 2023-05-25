@@ -1,6 +1,8 @@
 package com.arjuncodes.studentsystem.service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
@@ -15,7 +17,6 @@ import com.arjuncodes.studentsystem.model.dts1.dto.CtpcompDTOput;
 import com.arjuncodes.studentsystem.repository.dts1.CtpattachRepository;
 import com.arjuncodes.studentsystem.repository.dts1.CtpcompRepository;
 import com.arjuncodes.studentsystem.utils.Auxiliar;
-
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.spi.MappingContext;
@@ -55,7 +56,6 @@ public class CtpcompService
         this.mapper.addConverter(converterDTOputToENT);
         this.mapper.addConverter(converterDTOpostToENT);
 
-        
         /*this.agora = LocalDateTime.now();        
         this.agoraStr = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(agora);
         this.data_audit = agora.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
@@ -73,9 +73,12 @@ public class CtpcompService
         for(CtpcompCAD cad : cadastros){
             
             //get first attach
-            List<Ctpattach> attachs = ctpattachRepository.findByRegid(cad.getCompid());
+            List<Ctpattach> attachs = ctpattachRepository.findByIdreg(cad.getCompid());
             CtpcompAttach_post atachCAD = new CtpcompAttach_post(
-                attachs.get(0).getAtachid(), attachs.get(0).getAtachname(), attachs.get(0).getB64file() //just attach file name not the full data base64
+                attachs.get(0).getAtachid(), 
+                attachs.get(0).getAtachname(), 
+                attachs.get(0).getAtachtp(),
+                attachs.get(0).getB64file() //just attach file name not the full data base64
             );
             cad.getAttachs().add(atachCAD);
         };
@@ -121,14 +124,17 @@ public class CtpcompService
         //Get first component attach
         //List<Ctpattach> attach = ctpattachRepository.findByRegidList( (Sort.by(Sort.Direction.ASC, "atachid")), id); **erro: No property 'list' found for type 'long' 
         //Obs replace by custom query (atachtb='CTPCOMP' and regid=compid) when attach table used by others registers beyond CTPCOMP
-        List<Ctpattach> attachs = ctpattachRepository.findByRegid(id);        
+        List<Ctpattach> attachs = ctpattachRepository.findByIdreg(id);        
         Ctpattach singleAttach = attachs.get(0);
 
         String fileBase64 = singleAttach.getAtachpath()+"/"+singleAttach.getB64file();
         String base64Data = Auxiliar.readFile(fileBase64);
         
         CtpcompAttach_post atachCAD = new CtpcompAttach_post(
-            singleAttach.getAtachid(), singleAttach.getAtachname(), base64Data
+            singleAttach.getAtachid(), 
+            singleAttach.getAtachtb(),
+            singleAttach.getAtachname(), 
+            base64Data //replace by blob from table (atachdata)
         );
                 
         CtpcompCAD cadastro = mapEntityToCAD(componente);
@@ -146,9 +152,12 @@ public class CtpcompService
         for(CtpcompCAD cad : cadastros){
             
             //get first attach
-            List<Ctpattach> attachs = ctpattachRepository.findByRegid(cad.getCompid());
+            List<Ctpattach> attachs = ctpattachRepository.findByIdreg(cad.getCompid());
             CtpcompAttach_post atachCAD = new CtpcompAttach_post(
-                attachs.get(0).getAtachid(), attachs.get(0).getAtachname(), attachs.get(0).getB64file() //just attach file name not the full data base64
+                attachs.get(0).getAtachid(), 
+                attachs.get(0).getAtachtp(),
+                attachs.get(0).getAtachname(), 
+                attachs.get(0).getB64file() //just attach file name not the full data base64
             );
             cad.getAttachs().add(atachCAD);
         };        
@@ -234,20 +243,21 @@ public class CtpcompService
             LocalDate dt = LocalDate.parse(s.getDtacadS(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             String dtStr = dt.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
             //long dtLong = Long.valueOf(dtStr);
-            
+            long epoch = dt.toEpochSecond(LocalTime.parse("00:00:00"), ZoneOffset.UTC);
             //String fileName = StringUtils.leftPad(s.getNroit().trim(), 5, "0");
             //String outputPDF = fileName+".PDF";
-            String outputPDF = s.getAttachs().get(0).getAtachname();
-            String pathPDF = fileServerCTP+"/"+outputPDF; //for user PDFFILL
+            //**removido String outputPDF = s.getAttachs().get(0).getAtachname();
+            //**removido String pathPDF = fileServerCTP+"/"+outputPDF; //for user PDFFILL
                         
           
             //Set values
             d.setNroit(s.getNroit());
             d.setNomit(s.getNomit());
-            d.setPdffil(pathPDF);
-            d.setDtacad(dtStr);
+            d.setObsit(s.getObsit());
+            d.setDtacad(epoch);//unix
+            d.setDtacads(dtStr);
             d.setUsrcad(s.getUsrcad());
-            d.setObs(s.getObs());                        
+            d.setCategory(s.getCategory());                        
             //Set system audit                        
             d.setItaudsys(s.getItaudsys()); //sysrequest - frontend
             d.setItaudusr(s.getItaudusr()); //loged user on frontend
@@ -278,22 +288,23 @@ public class CtpcompService
             //Format dates and numbers            
             LocalDate dt = LocalDate.parse(s.getDtacadS(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             String dtStr = dt.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-            
+            long epoch = dt.toEpochSecond(LocalTime.parse("20:12:32"), ZoneOffset.UTC);
             
             //String fileName = s.getNroit().trim();
             //String outputPDF = fileName+".PDF";  
-            String outputPDF = s.getAttachs().get(0).getAtachname();
-            String pathPDF = fileServerCTP+"/"+outputPDF; //for user PDFFILL
+            //**removido String outputPDF = s.getAttachs().get(0).getAtachname();
+            //**removido String pathPDF = fileServerCTP+"/"+outputPDF; //for user PDFFILL
                         
           
             //Set values
 			d.setCompid(s.getCompid());
             d.setNroit(s.getNroit());
             d.setNomit(s.getNomit());
-            d.setPdffil(pathPDF);
-            d.setDtacad(dtStr);
+            d.setObsit(s.getObsit());
+            d.setDtacad(epoch);//unix
+            d.setDtacads(dtStr);
             d.setUsrcad(s.getUsrcad());
-            d.setObs(s.getObs());
+            d.setCategory(s.getCategory());  
             //Set system audit
             d.setItaudsys(s.getItaudsys()); //sysrequest - frontend
             d.setItaudusr(s.getItaudusr()); //loged user on frontend

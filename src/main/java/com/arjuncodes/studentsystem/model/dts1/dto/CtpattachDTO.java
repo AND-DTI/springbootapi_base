@@ -17,6 +17,9 @@ public class CtpattachDTO {
     //private String nroit;    
     @ApiModelProperty(position=1, value="Attach name", example="C120007.PDF")
     private String atachname;    
+
+    @ApiModelProperty(position=1, value="Attach type", example="2D")
+    private String atachtp;	    
         
     @ApiModelProperty(position=2, value="Component technical drawing (Base64)")
 	private String fileBase64;
@@ -36,19 +39,21 @@ public class CtpattachDTO {
         
     }   
     
-    public CtpattachDTO(long compid, String atachname, String fileBase64, String itaudsys, String itaudusr, String itaudhst) {
+    public CtpattachDTO(long compid, String atachname, String atachtp, String fileBase64, String itaudsys, String itaudusr, String itaudhst) {
         this.compid = compid;
         this.atachname = atachname;
+        this.atachtp = atachtp;
         this.fileBase64 = fileBase64;
         this.itaudsys = itaudsys;
         this.itaudusr = itaudusr;
         this.itaudhst = itaudhst;
     }
 
-    public CtpattachDTO(long atachid, long compid, String atachname, String fileBase64, String itaudsys, String itaudusr, String itaudhst) {
+    public CtpattachDTO(long atachid, long compid, String atachname, String atachtp, String fileBase64, String itaudsys, String itaudusr, String itaudhst) {
         this.atachid = atachid;
         this.compid = compid;
         this.atachname = atachname;
+        this.atachtp = atachtp;
         this.fileBase64 = fileBase64;
         this.itaudsys = itaudsys;
         this.itaudusr = itaudusr;
@@ -70,6 +75,11 @@ public class CtpattachDTO {
         this.atachname = atachname;
     }   
 
+    public String getAtachtp() {        return atachtp;    }
+    public void setAtachtp(String atachtp) {
+        this.atachtp = atachtp;
+    }    
+    
     public String getFileBase64() {        return fileBase64;    }
     public void setFileBase64(String fileBase64) {
         this.fileBase64 = fileBase64;
@@ -82,6 +92,8 @@ public class CtpattachDTO {
     public void setItaudusr(String itaudusr) {        this.itaudusr = itaudusr;    }
 
     public String getItaudhst() {        return itaudhst;    }
-    public void setItaudhst(String itaudhst) {        this.itaudhst = itaudhst;    }    
+    public void setItaudhst(String itaudhst) {        this.itaudhst = itaudhst;    }
+
+
     
 }

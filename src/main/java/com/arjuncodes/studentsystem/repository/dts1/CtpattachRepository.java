@@ -22,7 +22,7 @@ public interface CtpattachRepository extends JpaRepository<Ctpattach, Long>{
         
     //List<Ctpattach> findByRegidList(Sort sort, long regid);
 
-    List<Ctpattach> findByRegid(long regid);
+    List<Ctpattach> findByIdreg(long idreg);
     
 
     

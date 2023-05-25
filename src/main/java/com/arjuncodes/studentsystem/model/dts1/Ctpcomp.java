@@ -17,43 +17,49 @@ import javax.persistence.Table;
 //@IdClass(CtpcompKey.class)
 public class Ctpcomp  implements Serializable{
 
-/*	ID do componente                         COMPID          15 
-	Código componente                        NRO_IT     A    20 
-	Descricao componente                     NOM_IT     A    50 
-	Caminho desenho                          PDFFIL     A   200 
-	DTA CADASTRO                             DTACAD          11 
-	MAT USR CADASTRO                         USRCAD          10 
-	OBSERVAÇÃO                               OBS        A    50 
-	AUDITORIA SISTEMA                        ITAUDSYS   A    40 
-	AUDITORIA USUÁRIO                        ITAUDUSR   A    10 
-	AUDITORIA MÁQUINA                        ITAUDHST   A    10 
-	AUDITORIA DATA                           ITAUDDT    A     8 
-	AUDITORIA HORA                           ITAUDHR    A     8 	
-*/
+/*	COMPID      0015P        ID do componente
+	NROIT       0020A        Código componente
+	NOMIT       0070A        Nome/resumo comp.
+	OBSIT       0250A        Observação/espec.
+	DTACAD      0015P        Data cadastro (unix)
+	DTACADS     0008A        Dt. cadatro yyyymmdd'
+	USRCAD      0010P        Matrícula usuário
+	CATEGORY    0010A        Component category
+	IDSE        0032A        ID externo (SoftExp)
+	SEQIT       0015P        Seq. automatica IT	  */ 	
+
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column( columnDefinition="bigint" ) //decimal(15,0) DB2
 	private long compid;
 	
-	//@Id
 	@Column( columnDefinition="char(20)" )
 	private String nroit;
 	
 	@Column( columnDefinition="char(50)" )
 	private String nomit;
 	
-	@Column( columnDefinition="char(200)" )
-	private String pdffil;
+	@Column( columnDefinition="char(250)" )
+	private String obsit;
 
-	@Column( columnDefinition="char(8)" ) //decimal(11,0) DB2 *alter to C(8) in DB2
-	private String dtacad;
+	@Column( columnDefinition="int" ) 
+	private long dtacad;
 
-	@Column( columnDefinition="int" ) //decimal(10,0) DB2
+    @Column( columnDefinition="char(8)" ) 
+	private String dtacads;
+
+	@Column( columnDefinition="int" ) 
 	private Integer usrcad;
 	
-	@Column( columnDefinition="char(50)" )
-	private String obs;
+	@Column( columnDefinition="char(10)" )
+	private String category;
+
+    @Column( columnDefinition="char(32)" )
+	private String idse;
+
+	@Column( columnDefinition="int" ) 
+	private Integer seqit;    
 
 	@Column( columnDefinition="char(40)" )
 	private String itaudsys;
@@ -92,14 +98,19 @@ public class Ctpcomp  implements Serializable{
         this.nomit = nomit;
     }
 
-    public String getPdffil() {        return pdffil;    }
-    public void setPdffil(String pdffil) {
-        this.pdffil = pdffil;
+    public String getObsit() {        return obsit;    }
+    public void setObsit(String obsit) {
+        this.obsit = obsit;
     }
 
-    public String getDtacad() {        return dtacad;    }
-    public void setDtacad(String dtacad) {
+    public long getDtacad() {        return dtacad;    }
+    public void setDtacad(long dtacad) {
         this.dtacad = dtacad;
+    }
+
+    public String getDtacads() {        return dtacads;    }
+    public void setDtacads(String dtacads) {
+        this.dtacads = dtacads;
     }
 
     public Integer getUsrcad() {        return usrcad;    }
@@ -107,34 +118,35 @@ public class Ctpcomp  implements Serializable{
         this.usrcad = usrcad;
     }
 
-    public String getObs() {        return obs;    }
-    public void setObs(String obs) {
-        this.obs = obs;
+    public String getCategory() {        return category;    }
+    public void setCategory(String category) {
+        this.category = category;
     }
+
+    public String getIdse() {        return idse;    }
+    public void setIdse(String idse) {
+        this.idse = idse;
+    }
+
+    public Integer getSeqit() {        return seqit;    }
+    public void setSeqit(Integer seqit) {
+        this.seqit = seqit;
+    }
+
 
     public String getItaudsys() {        return itaudsys;    }
-    public void setItaudsys(String itaudsys) {
-        this.itaudsys = itaudsys;
-    }
+    public void setItaudsys(String itaudsys) {        this.itaudsys = itaudsys;    }
 
     public String getItaudusr() {        return itaudusr;    }
-    public void setItaudusr(String itaudusr) {
-        this.itaudusr = itaudusr;
-    }
+    public void setItaudusr(String itaudusr) {        this.itaudusr = itaudusr;    }
 
     public String getItaudhst() {        return itaudhst;    }
-    public void setItaudhst(String itaudhst) {
-        this.itaudhst = itaudhst;
-    }
+    public void setItaudhst(String itaudhst) {        this.itaudhst = itaudhst;    }
 
     public String getItauddt() {        return itauddt;    }
-    public void setItauddt(String itauddt) {
-        this.itauddt = itauddt;
-    }
+    public void setItauddt(String itauddt) {        this.itauddt = itauddt;    }
 
     public String getItaudhr() {        return itaudhr;    }
-    public void setItaudhr(String itaudhr) {
-        this.itaudhr = itaudhr;
-    }
+    public void setItaudhr(String itaudhr) {        this.itaudhr = itaudhr;    }    
 
 }

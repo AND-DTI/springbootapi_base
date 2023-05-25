@@ -1,14 +1,12 @@
 package com.arjuncodes.studentsystem.repository.dts1;
-
 import java.util.List;
 import java.util.Optional;
 //import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
 import com.arjuncodes.studentsystem.model.dts1.User;
 
-@Repository
+
+
 public interface UserRepository extends JpaRepository<User,String> {
 
 

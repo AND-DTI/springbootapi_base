@@ -50,12 +50,12 @@ public class Auxiliar {
 	}    
 
 
-    public static String decodeBase64(String encodedString, String outputPDF, String outputB64, String fileServer, String fileServerPUB) {
+    public static String[] decodeBase64(String encodedString, String outputPDF, String outputB64, String fileServer, String fileServerPUB) {
         
         Boolean decodificado =false;
         String decodeError ="";       
+        String[] result = {"-", ""};
         
-
         try {
 
         
@@ -101,10 +101,16 @@ public class Auxiliar {
         }
 
         if(decodificado){
-            return "OK";
+            //return "OK";
+            result[0] = "OK";
+            result[1] = "Arquivo decodificado com sucesso!";
         }else{
-            return decodeError;
+            //return decodeError;
+            result[0] = "NG";
+            result[1] = decodeError;
         }
+
+        return result;
         
 
     }

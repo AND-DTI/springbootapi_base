@@ -21,14 +21,17 @@ public class CtpcompDTOpost implements Serializable{
     @ApiModelProperty(position=2, value="Component description", example="Espaçador direito")
 	private String nomit;
 		
-	@ApiModelProperty(position=4, value="Register date (YYYY-MM-DD)", example="2014-10-03")
-	private String dtacadS; 
+	@ApiModelProperty(value="Obs/Espec", example="Espec. Téc... project...")
+	private String obsit;
 
-	@ApiModelProperty(position=5, value="User", example="37635")
+    @ApiModelProperty(value="Register date (YYYY-MM-DD)", example="2014-10-03")
+	private String dtacadS; /*do custom map to DB2*/
+
+	@ApiModelProperty(value="User", example="37635")
 	private Integer usrcad;
 	
-	@ApiModelProperty(position=6, value="Obs")
-	private String obs;
+    @ApiModelProperty(value="Category", example="37635")
+    private String category;
 	
     @ApiModelProperty(position=7, value="attachs")
     private List<CtpcompAttach_post> attachs = new ArrayList<CtpcompAttach_post>();
@@ -63,6 +66,11 @@ public class CtpcompDTOpost implements Serializable{
         this.nomit = nomit;
     }
 
+    public String getObsit() {        return obsit;    }
+    public void setObsit(String obsit) {        
+        this.obsit = obsit;    
+    }
+        
     public String getDtacadS() {        return dtacadS;    }
     public void setDtacadS(String dtacadS) {
         this.dtacadS = dtacadS;
@@ -73,15 +81,16 @@ public class CtpcompDTOpost implements Serializable{
         this.usrcad = usrcad;
     }
 
-    public String getObs() {        return obs;    }
-    public void setObs(String obs) {
-        this.obs = obs;
+    public String getCategory() {        return category;    }
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public List<CtpcompAttach_post> getAttachs() {        return attachs;    }
     public void setAttachs(List<CtpcompAttach_post> attachs) {
         this.attachs = attachs;
     }
+
 
     public String getItaudsys() {        return itaudsys;    }
     public void setItaudsys(String itaudsys) {        this.itaudsys = itaudsys;    }

@@ -19,18 +19,18 @@ public class CtpcompCAD implements Serializable{
 		    
     @ApiModelProperty(position=2, value="Component description")
 	private String nomit;
-	
-	@ApiModelProperty(position=3, value="Component technical drawing (PDF)")
-	private String pdffil;
 
+	@ApiModelProperty(value="Obs/Espec", example="Espec. Téc... project...")
+	private String obsit;    
+	
 	@ApiModelProperty(position=4, value="Register date (YYYYMMDD)")
-	private String dtacad; 
+	private String dtacads; 
 
 	@ApiModelProperty(position=5, value="User")
 	private Integer usrcad;
 	
-	@ApiModelProperty(position=6, value="Obs")
-	private String obs;
+    @ApiModelProperty(value="Category", example="MANUT")
+    private String category;
 
     @ApiModelProperty(position=7, value="attachs")
     private List<CtpcompAttach_post> attachs = new ArrayList<CtpcompAttach_post>();
@@ -57,30 +57,32 @@ public class CtpcompCAD implements Serializable{
         this.nomit = nomit;
     }
 
-    public String getPdffil() {        return pdffil;    }
-    public void setPdffil(String pdffil) {
-        this.pdffil = pdffil;
+    public String getObsit() {        return obsit;    }
+    public void setObsit(String obsit) {
+        this.obsit = obsit;
     }
 
-    public String getDtacad() {        return dtacad;    }
-    public void setDtacad(String dtacad) {
-        this.dtacad = dtacad;
+    public String getDtacads() {        return dtacads;    }
+    public void setDtacads(String dtacads) {
+        this.dtacads = dtacads;
     }
-
+        
     public Integer getUsrcad() {        return usrcad;    }
     public void setUsrcad(Integer usrcad) {
         this.usrcad = usrcad;
     }
 
-    public String getObs() {        return obs;    }
-    public void setObs(String obs) {
-        this.obs = obs;
-    }
+    public String getCategory() {        return category;    }
+    public void setCategory(String category) {
+        this.category = category;
+    }      
 
     public List<CtpcompAttach_post> getAttachs() {        return attachs;    }
     public void setAttachs(List<CtpcompAttach_post> attachs) {
         this.attachs = attachs;
-    }    
+    }
+
+    
 
    
 
