@@ -131,9 +131,9 @@ public class CtpcompService
         String base64Data = Auxiliar.readFile(fileBase64);
         
         CtpcompAttach_post atachCAD = new CtpcompAttach_post(
-            singleAttach.getAtachid(), 
-            singleAttach.getAtachtb(),
+            singleAttach.getAtachid(),             
             singleAttach.getAtachname(), 
+            singleAttach.getAtachtp(),
             base64Data //replace by blob from table (atachdata)
         );
                 
