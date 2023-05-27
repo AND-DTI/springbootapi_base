@@ -10,8 +10,9 @@ import java.util.Base64;
 import org.apache.commons.io.FileUtils;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.arjuncodes.studentsystem.model.dts1.Customers;
-import com.arjuncodes.studentsystem.model.dts1.dto.CustomersDTO;
+import com.and.apibase.model.dts1.Customers;
+import com.and.apibase.model.dts1.dto.CustomersDTO;
+
 //import ch.qos.logback.core.Context;
 //import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
