@@ -289,7 +289,7 @@ public class CtpcompService
             
 
             //Format dates and numbers            
-            LocalDate dt = LocalDate.parse(s.getDtacadS(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            LocalDate dt = LocalDate.parse(s.getDtacads(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             String dtStr = dt.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
             long epoch = dt.toEpochSecond(LocalTime.parse("20:12:32"), ZoneOffset.UTC);
             

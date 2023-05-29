@@ -25,7 +25,7 @@ public class CtpcompDTOpost implements Serializable{
 	private String obsit;
 
     @ApiModelProperty(value="Register date (YYYY-MM-DD)", example="2014-10-03")
-	private String dtacadS; /*do custom map to DB2*/
+	private String dtacads; /*do custom map to DB2*/
 
 	//@ApiModelProperty(value="User", example="37635")
 	//private Integer usrcad; //matricula
@@ -74,9 +74,9 @@ public class CtpcompDTOpost implements Serializable{
         this.obsit = obsit;    
     }
         
-    public String getDtacadS() {        return dtacadS;    }
-    public void setDtacadS(String dtacadS) {
-        this.dtacadS = dtacadS;
+    public String getDtacads() {        return dtacads;    }
+    public void setDtacads(String dtacads) {
+        this.dtacads = dtacads;
     }
 
     /*public Integer getUsrcad() {        return usrcad;    }

@@ -231,7 +231,7 @@ public class CtpcompController {
         
 
 		return ResponseEntity.status(HttpStatus.CREATED) 
-			.header("Accept", "application/json")
+			//.header("Accept", "application/json")
 			.body(cadastroALT);
 		     
     }
