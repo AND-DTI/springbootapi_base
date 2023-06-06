@@ -110,9 +110,24 @@ public class AuthController {
     public ResponseEntity<String> autheticate(@RequestBody Login login){
     //public ResponseEntity<CtpcompCAD> add(@RequestBody CtpcompDTOpost compDTO) throws ParseException{	
 				                                            
+
+        
+
+        //Return 404 for user not existence
+        List<User> users = userService.listByUsername(login.login());
+        if(users.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND) 
+            .header("Accept", "application/json")
+            .body("Usuário não encontrado");
+        }                
+        //User user = users.get(0);
+
+
+
+        
         UsernamePasswordAuthenticationToken userpassAuthenticationToken = 
             new UsernamePasswordAuthenticationToken(login.login(),  login.password());
-        
+
 
         try{
                 
