@@ -7,6 +7,18 @@ import org.springframework.security.core.GrantedAuthority;
 import com.and.apibase.model.dts1.keys.User_RoleKey;
 
 
+/*
+ create table fullstack.user_role (
+    username char(10) NOT NULL,
+    roleid int NOT NULL,
+    rolename char(20),  
+    dtacad char(8),    
+    FOREIGN KEY(username) REFERENCES user(username),
+	CONSTRAINT UC_USER_ROLE UNIQUE (username, roleid)
+); 
+  
+ */
+
 
 @Entity
 //@Immutable

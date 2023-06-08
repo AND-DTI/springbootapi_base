@@ -1,12 +1,11 @@
 package com.and.apibase.controller;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
-
+//import java.util.Set;
+//import java.util.ArrayList;
+//import java.util.Collections;
 import javax.servlet.http.HttpServletRequest;
-
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +13,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 //import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +23,6 @@ import io.swagger.v3.oas.annotations.Operation;
 //import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 */
-
 import com.and.apibase.model.dts1.User;
 import com.and.apibase.model.dts1.User_Role;
 import com.and.apibase.model.dts1.dto.Login;
@@ -31,7 +30,6 @@ import com.and.apibase.model.dts1.dto.LoginAD;
 import com.and.apibase.model.dts1.dto.User_RoleDTO;
 import com.and.apibase.service.TokenService;
 import com.and.apibase.service.UserService;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.*;
 //import org.springframework.beans.factory.annotation.Autowired;
@@ -59,10 +57,9 @@ public class AuthController {
     
 
 
-
-/*********************************************************************************************************
-    ****** POST Endpoint [auth] 
- * @throws UnknownHostException******************************************************************************
+    //@throws UnknownHostException
+    /*********************************************************************************************************
+    ****** POST Endpoint [showuser]  *************************************************************************
     *********************************************************************************************************/    
     @GetMapping(value="/showuser", produces="application/json") 
     @Operation(summary = "Show AD User.")
@@ -98,38 +95,47 @@ public class AuthController {
     }
 
 
+
+
     /*********************************************************************************************************
-    ****** POST Endpoint [auth] ******************************************************************************
+    ****** POST Endpoint [login] *****************************************************************************
     *********************************************************************************************************/    
-    @PostMapping(value="/auth", produces="application/json") 
+    @PostMapping(value="/login", produces="application/json") 
     @Operation(summary = "Autenticar.")
     @ApiResponses(value = {
         @ApiResponse(responseCode="200", description="Autenticado com sucesso!"),
     })
     @ResponseStatus(HttpStatus.OK)    
     public ResponseEntity<String> autheticate(@RequestBody Login login){
-    //public ResponseEntity<CtpcompCAD> add(@RequestBody CtpcompDTOpost compDTO) throws ParseException{	
-				                                            
-
+    				                                            
         
-
-        //Return 404 for user not existence
-        List<User> users = userService.listByUsername(login.login());
-        if(users.isEmpty()){
+        //Check SE user (return 404 for non existent user) 
+        User_RoleDTO user = chekUser(login);
+        if(user == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND) 
             .header("Accept", "application/json")
-            .body("Usuário não encontrado");
-        }                
+            .body("Usuário não encontrado no ambiente SE");
+        }
+
+
+
+        //Check FERG.COM user (return 403[forbidden] for new user) 
+        List<User> users = userService.listByUsername(login.login());
+        if(users.isEmpty()){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN) 
+            .header("Accept", "application/json")
+            .body("Usuário não cadatrado no sistema FERG.COM");
+        }               
         //User user = users.get(0);
 
 
 
-        
+        //Authenticate user/pass (Return 401[unauthorized] for bad credentials)
         UsernamePasswordAuthenticationToken userpassAuthenticationToken = 
             new UsernamePasswordAuthenticationToken(login.login(),  login.password());
 
 
-        try{
+        try{try{
                 
             Authentication authenticate = this.authManager.authenticate(userpassAuthenticationToken);
 
@@ -139,24 +145,44 @@ public class AuthController {
 
             //Update user token on database...
             //***create update on UserService */
-
             //CtpcompCAD cadastroALT = ctpcompService.update(compDTO);		                                			
+            
             return ResponseEntity.status(HttpStatus.OK) 
                 .header("Accept", "application/json")
                 .body(token);
 
-        } catch (BadCredentialsException be) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED) 
-            .header("Accept", "application/json")
-            .body(be.getMessage());
-        }
-
-        //} catch (AuthenticationException e) {
-        //    return ResponseEntity.badRequest().build();
-        //}
+        
+            } catch (BadCredentialsException be) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED) 
+                    .header("Accept", "application/json")
+                    .body(be.getMessage());
+            }
+            } catch (AuthenticationException ae) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED) 
+                    .header("Accept", "application/json")
+                    .body(ae.getMessage());
+                //return ResponseEntity.badRequest().build();
+            }
+    
 
 
     }
+
+
+    private User_RoleDTO chekUser(Login login){
+
+        User_RoleDTO user = null;
+
+        if(StringUtils.equals(login.login(), "sb037635")){
+            user = new User_RoleDTO(0, "USER", "Basic User access");
+        }
+        if(StringUtils.equals(login.login(), "SB011700")){
+            user = new User_RoleDTO(0, "USER", "Basic User access");
+        }
+
+        return user;
+
+    }    
 
 
 
